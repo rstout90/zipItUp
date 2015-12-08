@@ -1,0 +1,55 @@
+#!/usr/bin/python
+'''
+author: ryan st***
+date: 12/5/2015
+time: 18:55 Eastern time (GMT -5)
+language: python 3.4
+purpose: to zip a directory or a folder as simply as possible, and write
+         the generated .tar.gz to one of my USB flash drives (or any other location), plans are to add a
+         function that will also use 'GnuPG' to encrypt the folder and another
+         that will allow user to input a time in order to perform this task
+         daily, weekly, monthly, etc. I also want the user to be able to choose
+         the destination of the zipped folder. Just wanted to post this up now
+         to see if it worked on first attempt and to get a bit of feedback.
+'''
+# Import, import, import.
+import os, subprocess, sys, zipfile, re
+import shutil
+import time
+
+# Backup (zip) files
+def zipDir():
+  
+  try:
+    # Get file to be zipped and zip file destination from user  
+    Dir = "~"
+    str1 = input ('Input directory to be zipped(eg. Douments, Dowloads, Desktop/programs): ')
+    str2 = input ('Zipped output directory (eg. root, myBackups): ')
+    zipName = input ("What would you like to name your zipped folder? ")
+    path1 = Dir, str1, "/"
+    path2 = Dir, str2, "/"    
+    # Zip it up 
+   # print (zipFile, ".tar.gz will be created from the folder ", path1[0]+path1[1]+path1[2])
+           #"and placed into the folder ", path2[0]+path2[1]+path2[2])   
+
+    zipDirTo = os.path.expanduser(os.path.join(path2[0], path2[1]+path2[2], zipName))
+    zipDir = os.path.expanduser(os.path.join(path1[0], path1[1]))
+    shutil.make_archive(zipDirTo, 'gztar', zipDir)
+    print ('Directory "',zipDir,'" will be zipped and saved to the location: "' ,zipDirTo,'.tar.gz"')
+    print ("file zipped")
+  # In Case of mistake 
+  except:
+    print ("Something went wrong in compression.\n",
+    "Ending Task, Please try again")
+    quit()
+    
+# Execute the program
+def main():
+    print ("It will be a fucking miracle if this succeeds.")
+    zipDir()
+    print ("Success!!!!!!")
+    time.sleep(2)
+# Wrap it all up
+if __name__ == '__main__':
+  main()
+  quit()
